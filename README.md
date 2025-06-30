@@ -43,6 +43,3 @@ data/                    # Data files
 - This repository is for personal use, experimentation, and learning.
 - Scripts and notebooks may be in various stages of completion.
 - Data in `data/raw/` is for testing and development only.
-
-## License
-This repository is licensed under the MIT License.
