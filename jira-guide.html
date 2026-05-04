@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ERM Jira Quick Reference</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2744;
+    --navy-mid: #253560;
+    --slate: #4a5568;
+    --slate-light: #718096;
+    --accent: #2b6cb0;
+    --accent-light: #ebf4ff;
+    --teal: #2c7a7b;
+    --teal-light: #e6fffa;
+    --amber: #b7791f;
+    --amber-light: #fffbeb;
+    --green: #276749;
+    --green-light: #f0fff4;
+    --red: #9b2c2c;
+    --red-light: #fff5f5;
+    --border: #e2e8f0;
+    --bg: #f7f8fa;
+    --white: #ffffff;
+    --text: #1a202c;
+    --text-muted: #4a5568;
+    --rule: #cbd5e0;
+  }
+
+- { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+font-family: ‘IBM Plex Sans’, sans-serif;
+background: #d1d5db;
+color: var(–text);
+font-size: 11px;
+line-height: 1.4;
+}
+
+.page {
+width: 8.5in;
+min-height: 11in;
+background: var(–white);
+margin: 0.4in auto;
+padding: 0.45in 0.5in;
+display: grid;
+grid-template-rows: auto 1fr;
+box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+position: relative;
+}
+
+/* ── HEADER ── */
+.page-header {
+display: flex;
+justify-content: space-between;
+align-items: flex-end;
+border-bottom: 3px solid var(–navy);
+padding-bottom: 10px;
+margin-bottom: 18px;
+}
+
+.header-left h1 {
+font-size: 18px;
+font-weight: 700;
+color: var(–navy);
+letter-spacing: -0.3px;
+}
+
+.header-left .subtitle {
+font-size: 10px;
+color: var(–slate-light);
+font-weight: 400;
+margin-top: 2px;
+letter-spacing: 0.5px;
+text-transform: uppercase;
+}
+
+.header-right {
+font-size: 10px;
+color: var(–slate-light);
+text-align: right;
+font-weight: 400;
+}
+
+.page-side-label {
+display: inline-block;
+background: var(–navy);
+color: white;
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 0.8px;
+text-transform: uppercase;
+padding: 3px 8px;
+border-radius: 2px;
+margin-bottom: 4px;
+}
+
+/* ── SECTION ── */
+.section {
+margin-bottom: 18px;
+}
+
+.section-title {
+font-size: 9px;
+font-weight: 700;
+letter-spacing: 1.2px;
+text-transform: uppercase;
+color: var(–slate-light);
+margin-bottom: 8px;
+padding-bottom: 4px;
+border-bottom: 1px solid var(–border);
+}
+
+/* ── HIERARCHY TABLE ── */
+.hierarchy-table {
+width: 100%;
+border-collapse: collapse;
+font-size: 10.5px;
+}
+
+.hierarchy-table th {
+background: var(–navy);
+color: white;
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 0.8px;
+text-transform: uppercase;
+padding: 7px 10px;
+text-align: left;
+}
+
+.hierarchy-table th:first-child { border-radius: 3px 0 0 0; }
+.hierarchy-table th:last-child { border-radius: 0 3px 0 0; }
+
+.hierarchy-table td {
+padding: 8px 10px;
+border-bottom: 1px solid var(–border);
+vertical-align: top;
+}
+
+.hierarchy-table tr:last-child td { border-bottom: none; }
+
+.level-badge {
+display: inline-block;
+font-size: 9.5px;
+font-weight: 700;
+padding: 2px 8px;
+border-radius: 3px;
+white-space: nowrap;
+}
+
+.badge-initiative { background: var(–navy); color: white; }
+.badge-milestone  { background: var(–accent); color: white; }
+.badge-story      { background: var(–teal); color: white; }
+
+.jira-equiv {
+font-size: 9px;
+color: var(–slate-light);
+margin-top: 3px;
+font-style: italic;
+}
+
+.time-pill {
+display: inline-block;
+background: var(–bg);
+border: 1px solid var(–border);
+border-radius: 10px;
+padding: 2px 8px;
+font-size: 9.5px;
+font-weight: 500;
+color: var(–slate);
+white-space: nowrap;
+}
+
+.example-text {
+font-size: 10px;
+color: var(–text);
+margin-bottom: 3px;
+font-weight: 500;
+}
+
+.example-sub {
+font-size: 9.5px;
+color: var(–slate);
+margin-top: 2px;
+}
+
+/* ── STATUS GRID ── */
+.status-grid {
+display: grid;
+grid-template-columns: 1fr 1fr 1fr;
+gap: 7px;
+}
+
+.status-card {
+border-radius: 4px;
+padding: 8px 10px;
+border: 1px solid transparent;
+}
+
+.status-open      { background: var(–bg); border-color: var(–border); }
+.status-progress  { background: var(–accent-light); border-color: #bee3f8; }
+.status-review    { background: var(–amber-light); border-color: #fbd38d; }
+.status-complete  { background: var(–teal-light); border-color: #81e6d9; }
+.status-done      { background: var(–green-light); border-color: #9ae6b4; }
+.status-cancelled { background: var(–red-light); border-color: #feb2b2; }
+
+.status-name {
+font-size: 9px;
+font-weight: 700;
+letter-spacing: 0.5px;
+text-transform: uppercase;
+margin-bottom: 3px;
+}
+
+.status-open .status-name      { color: var(–slate); }
+.status-progress .status-name  { color: var(–accent); }
+.status-review .status-name    { color: var(–amber); }
+.status-complete .status-name  { color: var(–teal); }
+.status-done .status-name      { color: var(–green); }
+.status-cancelled .status-name { color: var(–red); }
+
+.status-column {
+font-size: 8.5px;
+color: var(–slate-light);
+margin-bottom: 4px;
+font-family: ‘IBM Plex Mono’, monospace;
+}
+
+.status-desc {
+font-size: 9.5px;
+color: var(–slate);
+line-height: 1.35;
+}
+
+/* ── TWO-COL LAYOUT ── */
+.two-col {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 18px;
+}
+
+/* ── VIEW COMPARISON ── */
+.view-table {
+width: 100%;
+border-collapse: collapse;
+font-size: 10px;
+}
+
+.view-table th {
+background: var(–bg);
+color: var(–navy);
+font-weight: 700;
+font-size: 9px;
+text-transform: uppercase;
+letter-spacing: 0.6px;
+padding: 6px 10px;
+text-align: left;
+border: 1px solid var(–border);
+}
+
+.view-table td {
+padding: 6px 10px;
+border: 1px solid var(–border);
+vertical-align: top;
+line-height: 1.35;
+color: var(–slate);
+}
+
+.view-table tr:nth-child(even) td { background: var(–bg); }
+
+/* ── ACTIONS TABLE ── */
+.actions-table {
+width: 100%;
+border-collapse: collapse;
+font-size: 10px;
+}
+
+.actions-table th {
+background: var(–navy);
+color: white;
+font-size: 9px;
+font-weight: 600;
+letter-spacing: 0.8px;
+text-transform: uppercase;
+padding: 7px 10px;
+text-align: left;
+}
+
+.actions-table th:first-child { border-radius: 3px 0 0 0; }
+.actions-table th:last-child { border-radius: 0 3px 0 0; }
+
+.actions-table td {
+padding: 7px 10px;
+border-bottom: 1px solid var(–border);
+vertical-align: top;
+}
+
+.actions-table tr:last-child td { border-bottom: none; }
+.actions-table tr:nth-child(even) td { background: var(–bg); }
+
+.action-name {
+font-weight: 600;
+color: var(–navy);
+white-space: nowrap;
+font-size: 10px;
+}
+
+.click-path {
+font-family: ‘IBM Plex Mono’, monospace;
+font-size: 9px;
+color: var(–slate);
+line-height: 1.45;
+}
+
+.arrow { color: var(–accent); margin: 0 2px; }
+
+/* ── TICKET FIELDS ── */
+.field-table {
+width: 100%;
+border-collapse: collapse;
+font-size: 10px;
+}
+
+.field-table th {
+background: var(–bg);
+color: var(–navy);
+font-weight: 700;
+font-size: 9px;
+text-transform: uppercase;
+letter-spacing: 0.6px;
+padding: 6px 10px;
+text-align: left;
+border: 1px solid var(–border);
+}
+
+.field-table td {
+padding: 6px 10px;
+border: 1px solid var(–border);
+vertical-align: top;
+line-height: 1.35;
+}
+
+.field-name {
+font-weight: 600;
+color: var(–navy);
+white-space: nowrap;
+}
+
+.field-req {
+font-size: 8.5px;
+font-weight: 600;
+letter-spacing: 0.3px;
+}
+
+.req-yes { color: var(–green); }
+.req-no  { color: var(–slate-light); }
+
+.field-guidance { color: var(–slate); font-size: 9.5px; }
+
+/* ── NORMS BOX ── */
+.norms-box {
+border: 1.5px solid var(–border);
+border-radius: 4px;
+overflow: hidden;
+}
+
+.norms-header {
+background: var(–bg);
+padding: 6px 10px;
+font-size: 9px;
+font-weight: 700;
+letter-spacing: 0.8px;
+text-transform: uppercase;
+color: var(–slate);
+border-bottom: 1px solid var(–border);
+}
+
+.norms-row {
+display: flex;
+border-bottom: 1px solid var(–border);
+font-size: 10px;
+}
+
+.norms-row:last-child { border-bottom: none; }
+
+.norms-label {
+width: 42%;
+padding: 7px 10px;
+font-weight: 500;
+color: var(–navy);
+border-right: 1px solid var(–border);
+background: var(–white);
+}
+
+.norms-value {
+flex: 1;
+padding: 7px 10px;
+color: var(–slate);
+font-size: 9.5px;
+}
+
+.placeholder {
+color: var(–rule);
+font-style: italic;
+font-size: 9px;
+}
+
+/* ── CALLOUT ── */
+.callout {
+background: var(–accent-light);
+border-left: 3px solid var(–accent);
+border-radius: 0 4px 4px 0;
+padding: 8px 12px;
+font-size: 9.5px;
+color: var(–slate);
+margin-top: 10px;
+line-height: 1.45;
+}
+
+.callout strong { color: var(–navy); }
+
+/* ── FOOTER ── */
+.page-footer {
+position: absolute;
+bottom: 0.3in;
+left: 0.5in;
+right: 0.5in;
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding-top: 8px;
+border-top: 1px solid var(–border);
+font-size: 8.5px;
+color: var(–slate-light);
+}
+
+/* ── PRINT ── */
+@media print {
+body { background: white; }
+.page {
+width: 100%;
+min-height: auto;
+height: 11in;
+margin: 0;
+padding: 0.4in 0.45in 0.35in;
+box-shadow: none;
+page-break-after: always;
+}
+.page:last-child { page-break-after: avoid; }
+}
+</style>
+
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════ SIDE 1 ══════ -->
+
+<div class="page">
+  <div>
+    <div class="page-header">
+      <div class="header-left">
+        <div class="page-side-label">Side 1 of 2</div>
+        <h1>ERM Jira Quick Reference</h1>
+        <div class="subtitle">Enterprise Risk Management &nbsp;·&nbsp; Work Hierarchy &nbsp;&amp;&nbsp; Status Workflow</div>
+      </div>
+      <div class="header-right">
+        Enterprise Risk Management<br>
+        <span style="color:var(--rule)">Updated: ___________</span>
+      </div>
+    </div>
+
+```
+<!-- SECTION 1: Hierarchy -->
+<div class="section">
+  <div class="section-title">Work Item Hierarchy</div>
+  <table class="hierarchy-table">
+    <thead>
+      <tr>
+        <th style="width:16%">Level</th>
+        <th style="width:13%">Time Horizon</th>
+        <th style="width:28%">ERM Example</th>
+        <th>Description &amp; Ownership</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <span class="level-badge badge-initiative">Initiative</span>
+          <div class="jira-equiv">Epic in Jira</div>
+        </td>
+        <td><span class="time-pill">~12 months</span></td>
+        <td>
+          <div class="example-text">Launch Risk Metrics Program</div>
+          <div class="example-sub">2025 Enterprise Risk Assessment<br>Board Reporting Framework</div>
+        </td>
+        <td style="color:var(--slate); font-size:10px; line-height:1.45;">
+          A major program or risk domain. Spans the full year. Typically created and owned by ERM leadership. Contains all related Milestones beneath it.
+        </td>
+      </tr>
+      <tr style="background:var(--bg)">
+        <td>
+          <span class="level-badge badge-milestone">Milestone</span>
+          <div class="jira-equiv">Feature in Jira</div>
+        </td>
+        <td><span class="time-pill">Few months</span></td>
+        <td>
+          <div class="example-text">Define Metrics &amp; Thresholds</div>
+          <div class="example-sub">Develop Automated Data Pipeline<br>Build Reporting &amp; Alert System</div>
+        </td>
+        <td style="color:var(--slate); font-size:10px; line-height:1.45;">
+          A workstream or phase within an Initiative. Multi-month effort. Groups related Stories. Status rolls up to the Initiative view in the Plan.
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <span class="level-badge badge-story">Story</span>
+          <div class="jira-equiv">Story in Jira</div>
+        </td>
+        <td><span class="time-pill">2–3 weeks</span></td>
+        <td>
+          <div class="example-text">Draft KRI definitions for operational risk</div>
+          <div class="example-sub">Build extraction query for source data<br>Conduct UAT with ERM team</div>
+        </td>
+        <td style="color:var(--slate); font-size:10px; line-height:1.45;">
+          A discrete task owned by <strong>one person</strong>. Verb-led title. If it takes more than 2–3 weeks or needs multiple owners, split it into separate Stories or a new Milestone.
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- SECTION 2: Status Workflow -->
+<div class="section">
+  <div class="section-title">Status Workflow &nbsp;·&nbsp; Kanban Board</div>
+  <div class="status-grid">
+    <div class="status-card status-open">
+      <div class="status-column">TO DO column</div>
+      <div class="status-name">Open</div>
+      <div class="status-desc">Work identified and assigned, not yet started. Default status for all new Stories.</div>
+    </div>
+    <div class="status-card status-progress">
+      <div class="status-column">IN PROGRESS column</div>
+      <div class="status-name">In Progress</div>
+      <div class="status-desc">Actively being worked on. Move here the day you begin — not before.</div>
+    </div>
+    <div class="status-card status-review">
+      <div class="status-column">IN REVIEW column</div>
+      <div class="status-name">In Peer Review</div>
+      <div class="status-desc">Work is complete; awaiting review or feedback from another team member.</div>
+    </div>
+    <div class="status-card status-complete">
+      <div class="status-column">IN REVIEW column</div>
+      <div class="status-name">Work Complete</div>
+      <div class="status-desc">Review passed. Pending final sign-off or stakeholder acceptance before closing.</div>
+    </div>
+    <div class="status-card status-done">
+      <div class="status-column">DONE column</div>
+      <div class="status-name">Done</div>
+      <div class="status-desc">Fully complete and accepted. No further action required.</div>
+    </div>
+    <div class="status-card status-cancelled">
+      <div class="status-column">DONE column</div>
+      <div class="status-name">Cancelled</div>
+      <div class="status-desc">Work will not be completed. Add a comment explaining why before closing.</div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 3: Plan vs Kanban -->
+<div class="section">
+  <div class="section-title">Which View to Use</div>
+  <table class="view-table">
+    <thead>
+      <tr>
+        <th style="width:18%">View</th>
+        <th style="width:30%">Best For</th>
+        <th>What You See</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:700; color:var(--navy);">Plan<br><span style="font-size:9px; font-weight:400; color:var(--slate-light);">Gantt / Timeline</span></td>
+        <td>Reviewing overall project progress, checking Initiative and Milestone timelines, preparing status updates for leadership.</td>
+        <td>Initiatives and Milestones displayed as timeline bars with start/end dates. High-level view — not intended for daily task management.</td>
+      </tr>
+      <tr>
+        <td style="font-weight:700; color:var(--navy);">Board<br><span style="font-size:9px; font-weight:400; color:var(--slate-light);">Kanban</span></td>
+        <td>Day-to-day work delivery. Moving Stories through workflow, checking what's assigned to you, updating status.</td>
+        <td>Stories as cards organized by status column. Primary working view for all team members.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+```
+
+  </div>
+
+  <div class="page-footer">
+    <span>Enterprise Risk Management &nbsp;·&nbsp; Jira Quick Reference</span>
+    <span>Side 1: Hierarchy &amp; Status &nbsp;|&nbsp; See Side 2 for Actions &amp; Team Norms</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════ SIDE 2 ══════ -->
+
+<div class="page">
+  <div>
+    <div class="page-header">
+      <div class="header-left">
+        <div class="page-side-label">Side 2 of 2</div>
+        <h1>ERM Jira Quick Reference</h1>
+        <div class="subtitle">Enterprise Risk Management &nbsp;·&nbsp; Common Actions &amp; Team Norms</div>
+      </div>
+      <div class="header-right">
+        Enterprise Risk Management<br>
+        <span style="color:var(--rule)">Updated: ___________</span>
+      </div>
+    </div>
+
+```
+<div class="two-col">
+  <div>
+    <!-- SECTION 4: Common Actions -->
+    <div class="section">
+      <div class="section-title">Common Actions &nbsp;·&nbsp; Click Paths</div>
+      <table class="actions-table">
+        <thead>
+          <tr>
+            <th style="width:35%">Action</th>
+            <th>How To</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="action-name">Find work assigned to you</td>
+            <td class="click-path">
+              Board <span class="arrow">→</span> Assignee filter (top of board) <span class="arrow">→</span> select your name
+            </td>
+          </tr>
+          <tr>
+            <td class="action-name">Open a work item</td>
+            <td class="click-path">
+              Click the card title on the Board, or search by item number in the search bar
+            </td>
+          </tr>
+          <tr>
+            <td class="action-name">Update status</td>
+            <td class="click-path">
+              Board <span class="arrow">→</span> drag card to new column<br>
+              — OR — open item <span class="arrow">→</span> click status dropdown <span class="arrow">→</span> select new status
+            </td>
+          </tr>
+          <tr>
+            <td class="action-name">Add a comment</td>
+            <td class="click-path">
+              Open item <span class="arrow">→</span> scroll to Activity section <span class="arrow">→</span> click Add a comment
+            </td>
+          </tr>
+          <tr>
+            <td class="action-name">Create a new Story</td>
+            <td class="click-path">
+              Board <span class="arrow">→</span> + Create (top nav) <span class="arrow">→</span> Type: Story <span class="arrow">→</span> select parent Milestone <span class="arrow">→</span> set title, assignee, start date, due date <span class="arrow">→</span> Save
+            </td>
+          </tr>
+          <tr>
+            <td class="action-name">View the Plan (timeline)</td>
+            <td class="click-path">
+              Left sidebar <span class="arrow">→</span> Plan <span class="arrow">→</span> use +/− to expand Initiatives and Milestones
+            </td>
+          </tr>
+          <tr>
+            <td class="action-name">Filter the Board by Initiative</td>
+            <td class="click-path">
+              Board <span class="arrow">→</span> Epic filter (top of board) <span class="arrow">→</span> select Initiative name
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- SECTION 5: Well-formed Story -->
+    <div class="section">
+      <div class="section-title">What Makes a Well-Formed Story</div>
+      <table class="field-table">
+        <thead>
+          <tr>
+            <th style="width:22%">Field</th>
+            <th style="width:12%">Required</th>
+            <th>Guidance</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="field-name">Title</td>
+            <td><span class="field-req req-yes">Yes</span></td>
+            <td class="field-guidance">Verb-led, specific. "Draft KRI definitions for operational risk" — not "KRI work." Someone else should know what done looks like from the title alone.</td>
+          </tr>
+          <tr>
+            <td class="field-name">Assignee</td>
+            <td><span class="field-req req-yes">Yes</span></td>
+            <td class="field-guidance">One person only. If it needs two people, split it into two Stories.</td>
+          </tr>
+          <tr>
+            <td class="field-name">Parent Milestone</td>
+            <td><span class="field-req req-yes">Yes</span></td>
+            <td class="field-guidance">Every Story must belong to a Milestone. Unlinked Stories won't appear in the Plan view.</td>
+          </tr>
+          <tr>
+            <td class="field-name">Start Date</td>
+            <td><span class="field-req req-yes">Yes</span></td>
+            <td class="field-guidance">When you expect to begin — not when it was created.</td>
+          </tr>
+          <tr>
+            <td class="field-name">Due Date</td>
+            <td><span class="field-req req-yes">Yes</span></td>
+            <td class="field-guidance">Target completion. If unknown, use your best estimate and add a comment flagging the uncertainty.</td>
+          </tr>
+          <tr>
+            <td class="field-name">Description</td>
+            <td><span class="field-req req-no">Optional</span></td>
+            <td class="field-guidance">Use for context, links, or acceptance criteria. Keep updates in Comments, not the Description.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div>
+    <!-- SECTION 6: Team Norms -->
+    <div class="section">
+      <div class="section-title">Team Norms &amp; Agreements</div>
+      <div class="norms-box">
+        <div class="norms-header">Established as of training — update as needed</div>
+        <div class="norms-row">
+          <div class="norms-label">Who creates Initiatives?</div>
+          <div class="norms-value"><span class="placeholder">[ To be confirmed ]</span></div>
+        </div>
+        <div class="norms-row">
+          <div class="norms-label">Who creates Milestones?</div>
+          <div class="norms-value"><span class="placeholder">[ To be confirmed ]</span></div>
+        </div>
+        <div class="norms-row">
+          <div class="norms-label">Who creates Stories?</div>
+          <div class="norms-value"><span class="placeholder">[ All team members / To be confirmed ]</span></div>
+        </div>
+        <div class="norms-row">
+          <div class="norms-label">How often update status?</div>
+          <div class="norms-value"><span class="placeholder">[ e.g., At least weekly / When status changes ]</span></div>
+        </div>
+        <div class="norms-row">
+          <div class="norms-label">What does "Done" mean?</div>
+          <div class="norms-value"><span class="placeholder">[ Deliverable accepted by stakeholder, no open questions ]</span></div>
+        </div>
+        <div class="norms-row">
+          <div class="norms-label">Updates go in...</div>
+          <div class="norms-value">Comments field — not the Description. Description is for scope, not progress.</div>
+        </div>
+        <div class="norms-row">
+          <div class="norms-label">Status review cadence</div>
+          <div class="norms-value"><span class="placeholder">[ e.g., Weekly team review every Monday ]</span></div>
+        </div>
+        <div class="norms-row">
+          <div class="norms-label">Overdue Story — what to do</div>
+          <div class="norms-value"><span class="placeholder">[ Update due date AND add comment with reason ]</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 7: Quick Size Check -->
+    <div class="section">
+      <div class="section-title">Quick Size Check &nbsp;·&nbsp; "Where does this belong?"</div>
+      <div class="norms-box">
+        <div class="norms-header">If you're unsure which level to use, start here</div>
+        <div class="norms-row">
+          <div class="norms-label" style="font-style:italic; color:var(--slate);">"This will take about a year…"</div>
+          <div class="norms-value" style="font-weight:600; color:var(--navy);">→ Initiative</div>
+        </div>
+        <div class="norms-row">
+          <div class="norms-label" style="font-style:italic; color:var(--slate);">"This is a few months of work…"</div>
+          <div class="norms-value" style="font-weight:600; color:var(--navy);">→ Milestone</div>
+        </div>
+        <div class="norms-row">
+          <div class="norms-label" style="font-style:italic; color:var(--slate);">"This takes 2–3 weeks, it's mine to own…"</div>
+          <div class="norms-value" style="font-weight:600; color:var(--navy);">→ Story</div>
+        </div>
+        <div class="norms-row">
+          <div class="norms-label" style="font-style:italic; color:var(--slate);">"This Story is getting too big…"</div>
+          <div class="norms-value" style="font-weight:600; color:var(--navy);">→ Split into multiple Stories or a new Milestone</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECTION 8: Need Help -->
+    <div class="section">
+      <div class="section-title">Need Help?</div>
+      <div class="norms-box">
+        <div class="norms-row">
+          <div class="norms-label">Jira questions / access issues</div>
+          <div class="norms-value"><span class="placeholder">[ Contact name / Teams channel ]</span></div>
+        </div>
+        <div class="norms-row">
+          <div class="norms-label">Process / hierarchy questions</div>
+          <div class="norms-value"><span class="placeholder">[ Contact name ]</span></div>
+        </div>
+      </div>
+
+      <div class="callout" style="margin-top:10px;">
+        <strong>Remember:</strong> The board only works if it reflects reality. A card still showing "Open" that's been in progress for a week creates the exact visibility problem Jira is meant to solve. When in doubt, update the status.
+      </div>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <div class="page-footer">
+    <span>Enterprise Risk Management &nbsp;·&nbsp; Jira Quick Reference</span>
+    <span>Side 2: Actions &amp; Norms &nbsp;|&nbsp; See Side 1 for Hierarchy &amp; Status</span>
+  </div>
+</div>
+
+</body>
+</html>
