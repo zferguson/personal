@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jira Training — Enterprise Risk Management</title>
+
+<style>
+  :root {
+    /* System font stacks — no external dependencies */
+    --font-sans:  "Segoe UI", system-ui, -apple-system, Arial, sans-serif;
+    --font-serif: Georgia, "Times New Roman", serif;
+    --font-mono:  Consolas, "Courier New", monospace;
+
+    /* Edward Jones brand colors */
+    --ej-navy:   #1C2B4A;
+    --ej-yellow: #FAD141;
+    --ej-black:  #0D0D0D; /* reserved for text emphasis */
+
+    /* Light theme surface tokens */
+    --bg:        #F4F5F7;
+    --surface:   #FFFFFF;
+    --border:    #DDE1E9;
+    --text:      #1A1C24;
+    --muted:     #5E6678;
+    --code-bg:   #EEF0F5;
+
+    /* Semantic */
+    --accent:    var(--ej-navy);
+    --accent2:   #2D6A8F;   /* steel blue — secondary accent */
+    --warn:      #9A5F00;   /* dark amber — readable on light */
+    --warn-bg:   #FFF8E6;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.7;
+    min-height: 100vh;
+  }
+
+  /* ── Layout ── */
+  .shell {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    min-height: 100vh;
+  }
+
+  /* ── Sidebar — EJ navy with yellow accents ── */
+  nav {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    background: var(--ej-navy);
+    border-right: none;
+    padding: 2rem 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .nav-logo {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    color: var(--ej-yellow);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.01em;
+    line-height: 1.3;
+  }
+  .nav-logo span {
+    color: rgba(255,255,255,0.5);
+    font-size: 0.75rem;
+    display: block;
+    font-family: var(--font-sans);
+    margin-top: 0.2rem;
+  }
+
+  .nav-section {
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(250,209,65,0.55);
+    margin-top: 1.25rem;
+    margin-bottom: 0.4rem;
+    padding-left: 0.5rem;
+  }
+
+  nav a {
+    display: block;
+    padding: 0.35rem 0.5rem;
+    border-radius: 4px;
+    color: rgba(255,255,255,0.6);
+    text-decoration: none;
+    font-size: 0.82rem;
+    transition: color 0.15s, background 0.15s;
+  }
+  nav a:hover { color: #fff; background: rgba(255,255,255,0.08); }
+  nav a.active { color: var(--ej-yellow); background: rgba(250,209,65,0.12); }
+
+  /* ── Main ── */
+  main {
+    padding: 3rem 3.5rem 5rem;
+    max-width: 820px;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    border-bottom: 2px solid var(--ej-yellow);
+    padding-bottom: 2.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--ej-navy);
+    background: var(--ej-yellow);
+    padding: 0.2rem 0.6rem;
+    border-radius: 3px;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  h1 {
+    font-family: var(--font-serif);
+    font-size: 2.6rem;
+    line-height: 1.15;
+    color: var(--ej-navy);
+    margin-bottom: 0.75rem;
+    letter-spacing: -0.01em;
+  }
+
+  .hero-meta {
+    color: var(--muted);
+    font-size: 0.85rem;
+  }
+  .hero-meta span { color: var(--text); font-weight: 500; }
+
+  /* ── Sections ── */
+  section { margin-bottom: 3.5rem; }
+
+  h2 {
+    font-family: var(--font-serif);
+    font-size: 1.55rem;
+    color: var(--ej-navy);
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  h3 {
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--ej-navy);
+    margin: 1.5rem 0 0.5rem;
+    font-weight: 600;
+  }
+
+  p { margin-bottom: 0.9rem; color: var(--text); }
+  p:last-child { margin-bottom: 0; }
+
+  /* ── Hierarchy diagram ── */
+  .hierarchy {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+  }
+
+  .h-item {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 0.85rem 1.1rem;
+    position: relative;
+  }
+
+  .h-item::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    border-radius: 6px 0 0 6px;
+  }
+
+  .h-epic::before    { background: var(--ej-navy); }
+  .h-feature::before { background: var(--accent2); }
+  .h-story::before   { background: var(--ej-yellow); }
+
+  .h-label {
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+  .h-epic .h-label    { color: var(--ej-navy); }
+  .h-feature .h-label { color: var(--accent2); }
+  .h-story .h-label   { color: #7A6000; }
+
+  .h-desc { font-size: 0.85rem; color: var(--muted); }
+  .h-time { font-size: 0.75rem; color: var(--muted); white-space: nowrap; font-family: var(--font-mono); }
+
+  /* ── Field table ── */
+  .field-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 1rem 0;
+    font-size: 0.84rem;
+    background: var(--surface);
+    border-radius: 6px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .field-table th {
+    text-align: left;
+    padding: 0.5rem 0.75rem;
+    background: var(--ej-navy);
+    color: rgba(255,255,255,0.75);
+    font-weight: 500;
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    border-bottom: none;
+  }
+  .field-table td {
+    padding: 0.6rem 0.75rem;
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    vertical-align: top;
+  }
+  .field-table tr:last-child td { border-bottom: none; }
+  .field-table tr:hover td { background: #F9FAFB; }
+
+  .badge {
+    display: inline-block;
+    font-size: 0.68rem;
+    padding: 0.1rem 0.45rem;
+    border-radius: 3px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .badge-req { background: rgba(28,43,74,0.1); color: var(--ej-navy); }
+  .badge-opt { background: #F0F1F4; color: var(--muted); }
+
+  /* ── Code / JQL ── */
+  pre, code {
+    font-family: var(--font-mono);
+  }
+
+  /* Inline code (outside jql-block) */
+  :not(.jql-block) > code {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 0.05rem 0.35rem;
+    font-size: 0.82em;
+    color: var(--ej-navy);
+  }
+
+  .jql-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--ej-navy);
+    border-radius: 0 6px 6px 0;
+    padding: 1rem 1.25rem;
+    margin: 0.75rem 0;
+    font-size: 0.82rem;
+    line-height: 1.6;
+    overflow-x: auto;
+  }
+  .jql-block .kw  { color: var(--ej-navy);  font-weight: 600; }
+  .jql-block .val { color: #7A4F00; }
+  .jql-block .op  { color: var(--accent2); }
+  .jql-block .cmt { color: var(--muted); font-style: italic; }
+
+  /* ── Callouts ── */
+  .callout {
+    border-left: 4px solid var(--ej-navy);
+    background: rgba(28,43,74,0.05);
+    border-radius: 0 6px 6px 0;
+    padding: 0.85rem 1.1rem;
+    margin: 1rem 0;
+    font-size: 0.87rem;
+  }
+  .callout.warn {
+    border-color: #C47A00;
+    background: var(--warn-bg);
+  }
+  .callout.tip {
+    border-color: var(--ej-yellow);
+    background: #FFFBEA;
+  }
+
+  /* ── Step list ── */
+  .steps {
+    counter-reset: step;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 1rem 0;
+  }
+  .step {
+    counter-increment: step;
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    gap: 0.75rem;
+    align-items: start;
+    font-size: 0.87rem;
+  }
+  .step::before {
+    content: counter(step);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--ej-yellow);
+    color: var(--ej-navy);
+    font-size: 0.72rem;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+  }
+
+  /* ── Status pill ── */
+  .status-row { display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 0.75rem 0; }
+  .status-pill {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 20px;
+    font-weight: 500;
+    border: 1px solid;
+  }
+  .s-todo     { color: #5E6678; border-color: #BFC4CE; background: #F0F1F4; }
+  .s-progress { color: var(--ej-navy); border-color: var(--ej-navy); background: rgba(28,43,74,0.08); }
+  .s-review   { color: #7A4F00; border-color: #C47A00; background: #FFF8E6; }
+  .s-done     { color: #1A5C38; border-color: #2E8B57; background: #EDFAF3; }
+
+  /* ── Key list ── */
+  kbd {
+    display: inline-block;
+    background: #EDEEF2;
+    border: 1px solid #C8CCD6;
+    border-bottom-width: 2px;
+    border-radius: 3px;
+    padding: 0.05rem 0.4rem;
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    color: var(--text);
+  }
+
+  /* ── Footer ── */
+  footer {
+    margin-top: 4rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--ej-yellow);
+    font-size: 0.78rem;
+    color: var(--muted);
+  }
+
+  @media (max-width: 700px) {
+    .shell { grid-template-columns: 1fr; }
+    nav { position: relative; height: auto; }
+    main { padding: 1.5rem; }
+    h1 { font-size: 1.8rem; }
+  }
+</style>
+</head>
+<body>
+
+<div class="shell">
+
+  <!-- ── Sidebar ── -->
+  <nav>
+    <div class="nav-logo">
+      Jira Cloud
+      <span>Enterprise Risk Management</span>
+    </div>
+
+    <div class="nav-section">Foundations</div>
+    <a href="#overview">Overview</a>
+    <a href="#hierarchy">Work Hierarchy</a>
+
+    <div class="nav-section">Creating Work</div>
+    <a href="#epics">Epics</a>
+    <a href="#features">Features</a>
+    <a href="#stories">Stories</a>
+    <a href="#linking">Linking Items</a>
+
+    <div class="nav-section">Daily Use</div>
+    <a href="#views">Views & Navigation</a>
+    <a href="#plans">Plans</a>
+    <a href="#workflow">Workflow & Status</a>
+    <a href="#jql">JQL & Filters</a>
+
+    <div class="nav-section">Reference</div>
+    <a href="#norms">Team Norms</a>
+    <a href="#tips">Tips & Shortcuts</a>
+  </nav>
+
+  <!-- ── Main content ── -->
+  <main>
+
+    <div class="hero">
+      <div class="hero-tag">Participant Guide</div>
+      <h1>Jira for the ERM Team</h1>
+      <p class="hero-meta">
+        Project: <span>Enterprise Risk Management (ERM)</span> &nbsp;·&nbsp;
+        Platform: <span>Jira Cloud</span> &nbsp;·&nbsp;
+        Version: <span>1.0</span>
+      </p>
+    </div>
+
+    <!-- Overview -->
+    <section id="overview">
+      <h2>Overview</h2>
+      <p>Jira is the ERM team's system of record for tracking work across all levels of the project portfolio. It is not a sprint board or an agile tool — it is a structured way to capture, assign, and monitor work items from large multi-month initiatives down to individual deliverables.</p>
+      <p>We do not use story points, velocity, or sprint ceremonies. All work is tracked against dates and explicit status transitions.</p>
+      <div class="callout tip">Jira ticket IDs in the ERM project follow the format <strong>ERM-001</strong>, incrementing automatically when a new item is created.</div>
+    </section>
+
+    <!-- Hierarchy -->
+    <section id="hierarchy">
+      <h2>Work Hierarchy</h2>
+      <p>Every piece of work in the ERM project belongs to one of three levels. The levels are strictly nested: Stories roll up to Features, Features roll up to Epics.</p>
+
+      <div class="hierarchy">
+        <div class="h-item h-epic">
+          <div class="h-label">Epic</div>
+          <div class="h-desc">A major strategic initiative. Contains multiple Features.</div>
+          <div class="h-time">6 – 12 months</div>
+        </div>
+        <div class="h-item h-feature">
+          <div class="h-label">Feature</div>
+          <div class="h-desc">A significant deliverable within an Epic. Contains multiple Stories.</div>
+          <div class="h-time">1 – 3 months</div>
+        </div>
+        <div class="h-item h-story">
+          <div class="h-label">Story</div>
+          <div class="h-desc">A discrete, assignable unit of work. The primary day-to-day item.</div>
+          <div class="h-time">1 – 3 weeks</div>
+        </div>
+      </div>
+
+      <div class="callout">When in doubt about where something belongs, ask: could one person complete this in under three weeks? If yes, it is a Story. If it spans months and has multiple sub-deliverables, it is a Feature or Epic.</div>
+    </section>
+
+    <!-- Epics -->
+    <section id="epics">
+      <h2>Epics</h2>
+      <p>Epics represent the largest unit of tracked work. They are typically aligned to an annual or strategic program goal. In Jira Cloud, Epics are created the same way as other issue types — by selecting <em>Epic</em> in the issue type dropdown when creating a new item.</p>
+
+      <h3>Key fields for Epics</h3>
+      <table class="field-table">
+        <thead><tr><th>Field</th><th>Notes</th><th>Required</th></tr></thead>
+        <tbody>
+          <tr><td>Title (Epic Name)</td><td>Short, descriptive. Should name the initiative, not the outcome.</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Description</td><td>Scope boundaries, background, and stakeholder context.</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Assignee</td><td>The person accountable for the Epic's overall progress.</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Start Date / Due Date</td><td>Set at Epic level to bound the initiative window.</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Priority</td><td>Critical / High / Medium / Low</td><td><span class="badge badge-opt">Optional</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Features -->
+    <section id="features">
+      <h2>Features</h2>
+      <p>Features are the major deliverables within an Epic. A Feature should produce a tangible output — a report, a process, a policy, a tool — that can be independently reviewed or handed off. Each Feature must be linked to a parent Epic.</p>
+
+      <h3>Key fields for Features</h3>
+      <table class="field-table">
+        <thead><tr><th>Field</th><th>Notes</th><th>Required</th></tr></thead>
+        <tbody>
+          <tr><td>Title</td><td>Name the deliverable, not the activity. e.g. "Risk Appetite Statement" not "Work on risk appetite."</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Description</td><td>What this Feature produces and what is explicitly out of scope.</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Parent Epic</td><td>Set when creating or via the link field.</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Assignee</td><td>DRI for the Feature.</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Start Date / Due Date</td><td>Should fall within the parent Epic's date range.</td><td><span class="badge badge-req">Required</span></td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- Stories -->
+    <section id="stories">
+      <h2>Stories</h2>
+      <p>Stories are the primary working unit. They represent a discrete task that a single person can own and complete within one to three weeks. Most day-to-day Jira activity happens at the Story level.</p>
+
+      <h3>All Story fields</h3>
+      <table class="field-table">
+        <thead><tr><th>Field</th><th>Notes</th><th>Required</th></tr></thead>
+        <tbody>
+          <tr><td>Title</td><td>Action-oriented. Who does what. e.g. "Draft Q3 Risk Register updates for board review."</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Description</td><td>Context, background, and any relevant links or reference documents.</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Acceptance Criteria</td><td>Specific, verifiable conditions that define "done." Use a checklist or numbered list. This is what a reviewer uses to sign off.</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Assignee</td><td>The person doing the work. Only one assignee per Story.</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Reporter</td><td>The stakeholder who requested or owns the outcome. May differ from Assignee.</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Priority</td><td>Critical / High / Medium / Low. Set relative to other open Stories.</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Start Date</td><td>When work is expected to begin.</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Due Date</td><td>Hard deadline, if one exists.</td><td><span class="badge badge-opt">Optional</span></td></tr>
+          <tr><td>Target End Date</td><td>Working estimate for completion. Separate from a hard due date.</td><td><span class="badge badge-req">Required</span></td></tr>
+          <tr><td>Parent Feature</td><td>Link to the Feature this Story belongs to.</td><td><span class="badge badge-req">Required</span></td></tr>
+        </tbody>
+      </table>
+
+      <h3>Writing good acceptance criteria</h3>
+      <p>Acceptance criteria should answer: <em>how will we know this is done?</em> Each criterion should be verifiable — either it is met or it is not.</p>
+      <div class="callout tip">
+        <strong>Example:</strong><br/>
+        Story: "Update ERM Risk Register for Q3 reporting cycle."<br/><br/>
+        Acceptance Criteria:<br/>
+        1. All 12 risk categories reviewed and residual ratings updated.<br/>
+        2. Control effectiveness ratings updated for any changed controls.<br/>
+        3. Document reviewed and approved by Risk Manager before board submission date.<br/>
+        4. Completed register uploaded to the designated SharePoint folder.
+      </div>
+    </section>
+
+    <!-- Linking -->
+    <section id="linking">
+      <h2>Linking Items</h2>
+      <p>The hierarchy only works if items are connected. There are two ways to establish a parent-child relationship in Jira Cloud.</p>
+
+      <h3>At creation (preferred)</h3>
+      <div class="steps">
+        <div class="step">When creating a Story or Feature, look for the <strong>Parent</strong> field in the create dialog.</div>
+        <div class="step">Start typing the Epic or Feature name. Jira will auto-suggest matching items.</div>
+        <div class="step">Select the correct parent. The link is established on save.</div>
+      </div>
+
+      <h3>After creation (re-linking)</h3>
+      <div class="steps">
+        <div class="step">Open the Story or Feature you want to re-link.</div>
+        <div class="step">Find the <strong>Parent</strong> field in the right-hand detail panel.</div>
+        <div class="step">Click to edit and search for the correct parent item.</div>
+      </div>
+
+      <div class="callout warn">Do not use the generic "Link" button to establish parent-child relationships — that creates a peer-level issue link, not a hierarchy link. Use the Parent field specifically.</div>
+    </section>
+
+    <!-- Views -->
+    <section id="views">
+      <h2>Views &amp; Navigation</h2>
+      <p>Jira Cloud offers several views of the same data. Use the one that fits the task.</p>
+
+      <h3>Board view</h3>
+      <p>A column-based view organized by status. Best for seeing what is actively in progress across the team. Not a sprint board — all open work is visible regardless of dates.</p>
+
+      <h3>Backlog view</h3>
+      <p>A flat list of all Stories not yet started. Good for planning and prioritization. Use this to find work that hasn't been picked up yet.</p>
+
+      <h3>List view</h3>
+      <p>A tabular view of all items. Best for bulk-reviewing fields, sorting by date, or finding specific tickets quickly. Toggle columns to show only the fields you need.</p>
+
+      <h3>Finding your work</h3>
+      <div class="steps">
+        <div class="step">Use the search bar at the top of Jira (<kbd>G</kbd> then <kbd>G</kbd> to focus it quickly).</div>
+        <div class="step">Type your name or <code>ERM-</code> plus a ticket number to jump directly to an item.</div>
+        <div class="step">Use the <strong>My Work</strong> section in the left sidebar to see everything assigned to you across projects.</div>
+      </div>
+    </section>
+
+    <!-- Plans -->
+    <section id="plans">
+      <h2>Plans</h2>
+      <p>Jira Plans is a timeline-based view that displays your full work hierarchy — Epics, Features, and Stories — plotted against dates on a Gantt-style chart. It is the most useful view for understanding how work fits together over time and where the team's capacity is concentrated.</p>
+      <p>Access Plans from the left sidebar under <strong>Plans</strong>, or from the project's top navigation. The ERM plan is pre-configured to pull from the ERM project.</p>
+
+      <div class="callout tip">
+        <strong>What Plans shows that other views don't:</strong> the relationship between all three levels of the hierarchy on a single timeline. You can collapse Epics to see the high-level roadmap, or expand them to see individual Stories plotted against their start and target end dates.
+      </div>
+
+      <h3>Key things to know</h3>
+      <table class="field-table">
+        <thead><tr><th>Feature</th><th>How to use it</th></tr></thead>
+        <tbody>
+          <tr><td>Hierarchy levels</td><td>Use the <strong>Hierarchy</strong> toggle at the top to switch between Epic-only, Epic + Feature, or full detail views. Start at Epic level to orient yourself, then drill down.</td></tr>
+          <tr><td>Date bars</td><td>Each item's bar is driven by its Start Date and Target End Date in Jira. If a bar is missing or mis-sized, the underlying ticket is missing one of those fields.</td></tr>
+          <tr><td>Dependencies</td><td>If work items are linked as blockers, Plans can display dependency arrows between them. Useful for sequencing work that has hard ordering requirements.</td></tr>
+          <tr><td>Colour by</td><td>Use the <strong>Colour by</strong> option to shade items by Assignee or Priority — helpful for spotting workload concentration at a glance.</td></tr>
+          <tr><td>Zoom level</td><td>Switch between weeks, months, and quarters using the zoom control in the upper right. Quarters is the most useful default for Epic-level planning.</td></tr>
+          <tr><td>Saving changes</td><td>You can drag and reschedule items directly on the timeline. Changes write back to the underlying ticket's dates immediately. Do not reschedule other people's work without coordinating first.</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout warn">Plans writes changes directly to live tickets with no confirmation step. Treat it as a read-and-orient tool by default. Only edit on the timeline if you own the item or have explicit permission from the Assignee.</div>
+    </section>
+
+    <!-- Workflow -->
+    <section id="workflow">
+      <h2>Workflow &amp; Status</h2>
+      <p>Every Story moves through a defined set of statuses. You are responsible for keeping your own tickets current — status should reflect reality, not intent.</p>
+
+      <div class="status-row">
+        <span class="status-pill s-todo">To Do</span>
+        <span class="status-pill s-progress">In Progress</span>
+        <span class="status-pill s-review">In Review</span>
+        <span class="status-pill s-done">Done</span>
+      </div>
+
+      <table class="field-table">
+        <thead><tr><th>Status</th><th>Meaning</th><th>Who transitions</th></tr></thead>
+        <tbody>
+          <tr><td>To Do</td><td>Work is scoped and assigned but not yet started.</td><td>Assignee, when starting</td></tr>
+          <tr><td>In Progress</td><td>Active work is underway. Move here the day you begin, not after.</td><td>Assignee</td></tr>
+          <tr><td>In Review</td><td>Work is complete and awaiting stakeholder or peer review.</td><td>Assignee</td></tr>
+          <tr><td>Done</td><td>Acceptance criteria met and confirmed. No further action needed.</td><td>Assignee or Reviewer</td></tr>
+        </tbody>
+      </table>
+
+      <h3>Blocked work</h3>
+      <p>If a Story is blocked, do not leave it in <em>In Progress</em> without flagging it. Add a comment explaining the blocker, tag the relevant person, and use the <strong>Flagged</strong> option (the flag icon in Jira Cloud) to mark it visually on the board.</p>
+    </section>
+
+    <!-- JQL -->
+    <section id="jql">
+      <h2>JQL &amp; Filters</h2>
+      <p>JQL (Jira Query Language) is a simple text-based filter syntax. You don't need to memorize it — a few core patterns cover most daily use cases.</p>
+
+      <h3>Access JQL</h3>
+      <p>In the board or backlog, click <strong>Filters &gt; Advanced issue search</strong>, then switch to the JQL editor tab.</p>
+
+      <h3>Core queries for ERM</h3>
+
+      <p>All tickets currently assigned to you:</p>
+      <div class="jql-block">
+        <span class="kw">project</span> <span class="op">=</span> <span class="val">ERM</span> <span class="kw">AND</span> <span class="kw">assignee</span> <span class="op">=</span> <span class="val">currentUser()</span> <span class="kw">AND</span> <span class="kw">statusCategory</span> <span class="op">!=</span> <span class="val">Done</span>
+      </div>
+
+      <p>All Stories In Progress across the team:</p>
+      <div class="jql-block">
+        <span class="kw">project</span> <span class="op">=</span> <span class="val">ERM</span> <span class="kw">AND</span> <span class="kw">issuetype</span> <span class="op">=</span> <span class="val">Story</span> <span class="kw">AND</span> <span class="kw">status</span> <span class="op">=</span> <span class="val">"In Progress"</span>
+      </div>
+
+      <p>All open work under a specific Epic:</p>
+      <div class="jql-block">
+        <span class="kw">project</span> <span class="op">=</span> <span class="val">ERM</span> <span class="kw">AND</span> <span class="kw">"Epic Link"</span> <span class="op">=</span> <span class="val">ERM-001</span> <span class="kw">AND</span> <span class="kw">statusCategory</span> <span class="op">!=</span> <span class="val">Done</span>
+      </div>
+
+      <p>Items with a due date in the next 14 days:</p>
+      <div class="jql-block">
+        <span class="kw">project</span> <span class="op">=</span> <span class="val">ERM</span> <span class="kw">AND</span> <span class="kw">due</span> <span class="op">&lt;=</span> <span class="val">14d</span> <span class="kw">AND</span> <span class="kw">statusCategory</span> <span class="op">!=</span> <span class="val">Done</span>
+      </div>
+
+      <h3>Saving a filter</h3>
+      <div class="steps">
+        <div class="step">Run your JQL query and confirm it returns the right results.</div>
+        <div class="step">Click <strong>Save as</strong> at the top of the search page.</div>
+        <div class="step">Give the filter a descriptive name (e.g. "My Open ERM Stories").</div>
+        <div class="step">To share: open the filter, click <strong>Details</strong>, then set permissions to your team or project.</div>
+      </div>
+    </section>
+
+    <!-- Norms -->
+    <section id="norms">
+      <h2>Team Norms</h2>
+
+      <h3>Ticket ownership</h3>
+      <p>The Assignee is responsible for keeping their own ticket statuses current. Do not rely on someone else to move your tickets. Status should reflect where work actually stands today, not where it stood last week.</p>
+
+      <h3>Description and acceptance criteria</h3>
+      <p>Every Story must have a Description and Acceptance Criteria filled out before it moves to In Progress. A blank description is not acceptable — if a ticket lacks context, the Assignee is responsible for adding it before starting work.</p>
+
+      <h3>All Stories belong to a Feature</h3>
+      <p>Orphan Stories — Stories not linked to a Feature and Epic — create reporting gaps and make it impossible to understand workload at a program level. If you cannot identify a parent Feature, flag it rather than leaving the Story unlinked.</p>
+
+      <h3>One assignee per Story</h3>
+      <p>If work is genuinely shared, create separate Stories and link them. A ticket with no clear owner is a ticket that will not get done.</p>
+
+      <h3>No story points or estimation</h3>
+      <p>We do not use story points. Duration is expressed through Start Date and Target End Date. Do not estimate in points even if Jira prompts you to.</p>
+
+      <h3>Comments over DMs</h3>
+      <p>If a conversation about a ticket happens, add a summary comment to the ticket. This creates a traceable history and avoids information loss when people are out.</p>
+    </section>
+
+    <!-- Tips -->
+    <section id="tips">
+      <h2>Tips &amp; Shortcuts</h2>
+
+      <table class="field-table">
+        <thead><tr><th>Action</th><th>Shortcut</th></tr></thead>
+        <tbody>
+          <tr><td>Open global search</td><td><kbd>G</kbd> <kbd>G</kbd></td></tr>
+          <tr><td>Create new issue</td><td><kbd>C</kbd></td></tr>
+          <tr><td>Assign to me</td><td><kbd>A</kbd> (when issue is open)</td></tr>
+          <tr><td>Jump to board</td><td><kbd>G</kbd> <kbd>B</kbd></td></tr>
+          <tr><td>Open issue by key</td><td>Type <code>ERM-###</code> in search</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout tip">Jira Cloud's global search supports natural language — typing "my open stories" often works without JQL for quick lookups.</div>
+    </section>
+
+    <footer>
+      Enterprise Risk Management · Jira Cloud Participant Guide · v1.0
+    </footer>
+
+  </main>
+</div>
+
+<script>
+  // Highlight active nav link on scroll
+  const sections = document.querySelectorAll('section[id], div[id]');
+  const navLinks = document.querySelectorAll('nav a');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-20% 0px -70% 0px' });
+
+  sections.forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
