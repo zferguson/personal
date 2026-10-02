@@ -1,144 +1,33 @@
-Below is a sample proposal document you can present to senior leaders. It’s structured to clearly outline the value of the hackathon, provide essential details about the event, and includes a compelling mission statement.
+Section 1: Integrating an Ever-Changing Data Landscape
 
-Proposal for the Data Analytics/Data Science Hackathon
+Focus: How changing data sources, platforms, and business requirements affect integration and pipeline design.
 
-Date: [Insert Date]
-Prepared by: [Your Name/Team]
-For: Senior Leadership Team
+Intended Response: Drawing on my experience with legacy enterprise systems and modern cloud platforms, I will discuss how data engineering has evolved while the fundamental integration challenges remain consistent. I will emphasize balancing modern platform capabilities with custom engineering, maintainability, and the preservation of consistent business definitions.
 
-1. Executive Summary
+Section 2: Why the Hard Problems Never Go Away
 
-This proposal outlines the plan for hosting an internal Data Analytics/Data Science Hackathon designed to drive innovation, foster cross-functional collaboration, and unlock new opportunities in data-driven decision making within our investment advisory firm. By engaging employees across departments in solving real business challenges, this event will not only showcase our firm’s commitment to innovation but also identify promising ideas for improving client outcomes and operational efficiency.
+Focus: Persistent challenges involving data quality, ownership, documentation, governance, and operational reliability.
 
-2. Mission Statement
+Intended Response: I will discuss how technology alone cannot resolve organizational and business-definition problems. Using general examples from financial services risk analytics, I will explain why clearly defined metrics, accountable data owners, documented methodologies, and appropriate controls remain necessary regardless of the technology stack.
 
-“Empowering innovation through data – uniting our expertise to forge solutions that propel our firm into a future of data-driven excellence.”
+Section 3: Building Trustworthy Data Platforms
 
-This mission statement captures our vision to leverage the collective talent across our organization, transforming data into actionable insights that drive business value and reinforce our leadership in the financial advisory space.
+Focus: Defining pipeline success and establishing organizational trust in data.
 
-3. Objectives
-	•	Drive Innovation: Encourage creative problem solving to develop new analytical models and tools that address key business challenges.
-	•	Talent Development: Identify and nurture internal talent by providing a platform for employees to showcase their skills in data science and analytics.
-	•	Cross-Functional Collaboration: Break down silos between departments (e.g., IT, risk management, client services) and foster a culture of teamwork.
-	•	Enhance Operational Efficiency: Generate actionable insights and prototypes that can be piloted to improve existing processes and client strategies.
+Intended Response: I will emphasize that successful pipelines must produce reliable, business-ready information rather than simply move data between systems. Drawing on my experience developing executive risk reporting and KRI programs, I will discuss the importance of data lineage, consistent metric definitions, validation, and the ability to explain and defend analytical results.
 
-4. Business Case
-	•	Competitive Advantage: In a rapidly evolving financial landscape, innovation is critical. A hackathon will serve as a catalyst for developing novel solutions that enhance our advisory capabilities.
-	•	Employee Engagement: Offering an exciting, creative challenge can boost morale, foster retention, and attract top talent.
-	•	Operational Impact: By focusing on key business challenges (e.g., risk analytics, portfolio optimization, customer segmentation), we can uncover solutions with potential for significant ROI.
-	•	Cost-Effectiveness: The relatively modest investment in time and resources is offset by the potential benefits of operational improvements and breakthrough innovations.
+Section 4: Data Engineering in the Age of AI
 
-5. Event Overview
+Focus: How generative AI, coding assistants, and agentic systems are changing data engineering and analytics.
 
-Format and Duration
-	•	Format: Hybrid (in-person and virtual participation) to ensure maximum engagement across our global teams.
-	•	Duration: Two-day event structured as follows:
-	•	Day 1: Kickoff, team formation, problem statement sessions, initial brainstorming, and mentor office hours.
-	•	Day 2: Intensive prototype development, final presentations, judging, and awards ceremony.
+Intended Response: I will discuss how AI is changing the way engineers develop pipelines and users interact with data, while increasing the importance of data quality and governance. I will also discuss the general principle of maintaining appropriate human oversight and execution controls when introducing AI into consequential business processes.
 
-Key Activities
-	•	Kickoff Session: Introduction to objectives, rules, and expected outcomes.
-	•	Workshops: Pre-event sessions on key analytical tools and data handling techniques.
-	•	Mentorship: Dedicated sessions with internal experts to provide technical and strategic guidance.
-	•	Final Presentations: Teams pitch solutions to a panel of senior leaders and industry experts.
-	•	Awards & Recognition: Prizes and non-monetary recognition (e.g., project funding, certificates) to celebrate innovative ideas.
+Closing: The Next Five Years of Data Engineering
 
-6. Resource and Budget Requirements
-	•	Budget Estimate:
-	•	Venue/Platform setup (if applicable)
-	•	Catering and refreshments
-	•	Prizes and awards
-	•	Promotional materials
-	•	Technical support and IT resources
-	•	Internal Sponsorship: Engagement with key departments that will benefit from the outcomes (e.g., Risk Management, Client Services, IT).
+Focus: What will change and what will remain consistent as data engineering evolves.
 
-A detailed budget breakdown is available in the attached appendix.
+Intended Response: I expect AI and agentic systems to increasingly transform the interface and orchestration layers of data platforms, automating more development, querying, and analytical workflows. However, accountability for data quality, business definitions, governance, and the reliability of analytical outputs will remain fundamental.
 
-7. Risk Mitigation and Compliance
-	•	Data Security: All activities will adhere to our strict data handling and privacy protocols. Use of proprietary data will be managed via secure, sandboxed environments.
-	•	Regulatory Compliance: The event will comply with industry regulations, ensuring that no sensitive information is compromised.
-	•	Operational Continuity: The event is scheduled to minimize disruption to normal business operations.
+Confidentiality and Disclosure
 
-8. Timeline and Milestones
-	•	Approval and Planning: [Insert Date Range] – Secure leadership buy-in, finalize logistics, and assemble the organizing team.
-	•	Pre-Event Workshops: [Insert Date] – Conduct preparatory training sessions.
-	•	Hackathon Event: [Insert Date] – Two-day hackathon event.
-	•	Post-Event Follow-Up: [Insert Date Range] – Review outcomes, collect feedback, and outline next steps for promising projects.
-
-9. Conclusion and Next Steps
-
-The proposed hackathon represents a strategic investment in our firm’s future by leveraging internal talent and fostering a culture of innovation. We recommend moving forward with the planning process and establishing a dedicated cross-functional team to manage the event’s execution.
-
-Next Steps:
-	1.	Secure senior leadership endorsement.
-	2.	Assemble the planning committee.
-	3.	Finalize the budget and timeline.
-	4.	Communicate the event details across the organization.
-
-We look forward to your feedback and are excited about the potential of this initiative to drive transformative change within our firm.
-
-Attachments:
-	•	Detailed Budget Breakdown
-	•	Event Timeline
-	•	Preliminary Risk Assessment
-
-This document can serve as your guide to pitch the idea effectively. Tailor the details (dates, budget numbers, team assignments) to your specific environment to ensure it meets your firm’s standards and strategic objectives.
-
-
-CHANGE CONTROL PROCESS NOTES
-
-A good change control process for an analytics and reporting team should balance agility and risk mitigation, ensuring accurate, reliable, and well-documented changes while minimizing disruptions. Here’s a structured approach:
-
-1. Define Change Categories
-
-Not all changes carry the same risk. Categorizing changes helps determine the level of control needed:
-	•	Low-Risk Changes: Formatting updates, minor visual tweaks, non-business-critical changes.
-	•	Medium-Risk Changes: Query optimizations, data source updates, dashboard enhancements.
-	•	High-Risk Changes: Changes to financial metrics, KPI definitions, underlying data models, or major process automations.
-
-Each category should have different approval and testing requirements.
-
-2. Establish a Change Request Process
-
-Create a formal way to submit changes:
-	•	Who can request a change? (Analysts, stakeholders, IT, etc.)
-	•	What details are needed? (Change description, business impact, urgency)
-	•	Where is it logged? (JIRA, ServiceNow, SharePoint, or a simple shared tracker)
-
-For high-impact reports, require a business owner’s approval before moving forward.
-
-3. Implement a Review & Approval Workflow
-	•	Peer Review: Another analyst or developer should review the logic and impact before approval.
-	•	Team Lead or Manager Review: Ensure alignment with business goals and minimize risk.
-	•	Stakeholder Review (if applicable): For high-risk changes, business stakeholders should validate expected outcomes.
-
-4. Develop a Testing Strategy
-	•	Unit Testing: Check query logic, calculations, and transformations.
-	•	Regression Testing: Compare results before and after changes to ensure no unintended consequences.
-	•	UAT (User Acceptance Testing): Business users validate critical reports before deployment.
-
-5. Version Control & Documentation
-	•	Use Git (if technical) or a file-naming convention for reports (e.g., Sales_Report_v1.3).
-	•	Document changes in a Change Log (what changed, why, who approved, and when).
-	•	Maintain a Data Dictionary to track modifications in KPI definitions.
-
-6. Deploy Changes Strategically
-	•	Scheduled Deployments: Major changes should go live at non-peak hours.
-	•	Rollback Plan: Keep backups of old reports/models for quick restoration.
-	•	Stakeholder Communication: Notify users about significant updates in advance.
-
-7. Monitor & Iterate
-	•	Track issues post-deployment.
-	•	Collect feedback from users.
-	•	Hold retrospective reviews for major incidents to improve the process.
-
-Summary
-	1.	Categorize changes by risk level.
-	2.	Log change requests formally.
-	3.	Review & approve changes systematically.
-	4.	Test thoroughly before deployment.
-	5.	Document everything for accountability.
-	6.	Deploy strategically with rollback plans.
-	7.	Monitor & improve continuously.
-
-This process ensures accuracy, accountability, and stability in analytics/reporting changes while allowing agility where needed. Would you like a template or workflow diagram for implementation?
+My participation will focus on general industry practices, established engineering principles, and professional experience. I will not disclose Upstart’s confidential or proprietary information, nonpublic regulatory or examination matters, internal risk assessments, KRI methodologies or thresholds, sensitive technical architecture, security controls, or nonpublic details of AI implementations. Any references to Upstart’s technology or internal programs will be limited to information approved for external disclosure. I will apply the same confidentiality standards to my experience with previous employers.
